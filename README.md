@@ -1,7 +1,7 @@
 # Juerka-Utility-Collection
 ## OVerview
 ### What is this?
-This is the collection of utility scripts for Juerka.
+This is the collection of utility scripts for ![Juerka](https://github.com/Junichi-Juerka-Suzuki/Juerka).
 
 ### The purpose of this?
 It's simple. These utility scripts are intended for better understanding of spiking neural network activities.
