@@ -1,10 +1,10 @@
 # Juerka-Utility-Collection
 ## Overview
 ### What is this?
-This is the collection of utility scripts for ![Juerka](https://github.com/Junichi-Juerka-Suzuki/Juerka).
+This is the collection of utility scripts for [Juerka](https://github.com/Junichi-Juerka-Suzuki/Juerka).
 
 ### The purpose of this?
-It's simple. These utility scripts are intended for better understanding of spiking neural network activities.
+It's simple. These utility scripts are intended for the better understanding of spiking neural network activities.
 In other words, you can visualize or analyze spiking neural network activities with these utility scripts.
 
 ### Who contributes to this?
