@@ -1,5 +1,5 @@
 # Juerka-Utility-Collection
-## OVerview
+## Overview
 ### What is this?
 This is the collection of utility scripts for ![Juerka](https://github.com/Junichi-Juerka-Suzuki/Juerka).
 
@@ -48,3 +48,9 @@ For example:
 
 ### Limitations
 Currently this script only supports the range of \[0,1000\) for both spike_timing and neuron_number.
+
+## plot_networks.py
+### dependencies
+
+Please pip install below packages.
+- scikit-network
