@@ -8,29 +8,20 @@ import sys
 import argparse
 
 from visualize import plot_spikes
-from visualize import plot_networks
 
-def command_visualize_spikes(args):
+def command_visualize(args):
     plot_spikes.raster_plot(args)
 
-def command_visualize_networks(args):
-    plot_networks.network_structure_plot(args)
+def main(arguments):
 
-def main(arguments):    
     parser = argparse.ArgumentParser(prog='Juerka-utility-collection',description=__doc__)
 
     subparsers = parser.add_subparsers()
 
-    parser_visualize = subparsers.add_parser('visualize_spikes', help='see `visualize_spikes -h`')
+    parser_visualize = subparsers.add_parser('visualize', help='see `visualize -h`')
     parser_visualize.add_argument('-dirname', required=True, help='directory name which contains log files.')
     parser_visualize.add_argument('-logfile_index', required=True, help='logfile index.')
-    parser_visualize.add_argument('-start_time', required=False, default=0, help='start time.')
-    parser_visualize.set_defaults(handler=command_visualize_spikes)
-
-    parser_visualize = subparsers.add_parser('visualize_networks', help='see `visualize_networks -h`')
-    parser_visualize.add_argument('-dirname', required=True, help='directory name which contains weight log files.')
-    parser_visualize.add_argument('-logfile_index', required=True, help='logfile index.')
-    parser_visualize.set_defaults(handler=command_visualize_networks)
+    parser_visualize.set_defaults(handler=command_visualize)
 
     args = parser.parse_args(arguments)
 
@@ -42,9 +33,6 @@ def main(arguments):
 if __name__ == '__main__':
 
     return_value = 0
-
-    #sys.argv.extend(["visualize_networks", "-dirname", "20240331200632", "-logfile_index", "0"])
-    #sys.argv.extend(["visualize_spikes", "-dirname", "20240512085413", "-logfile_index", "0"])
 
     try:
         main(sys.argv[1:])
