@@ -4,21 +4,21 @@
 """This is the network plot generator script.
 """
 
-#import networkit as nk
-#import networkit as nx
-#import networkit.vizbridges as nkv
-#import matplotlib.pyplot as plt
+#from distutils.util import strtobool
+import copy
+import setuptools
 import math
 import os
 import re
 import numpy as np
 from scipy import sparse
-from sknetwork.visualization.graphs import svg_graph
+from sknetwork.visualization import visualize_graph
 
 def network_structure_plot(arguments):
 
     dirname = arguments.dirname
     network_index = arguments.logfile_index
+    silent = arguments.silent
 
     dir_separator = '/'
     logfile_name_prefix = 'JUNWEIGHTLOG_'
@@ -34,10 +34,12 @@ def network_structure_plot(arguments):
     read_mode = ""
     row = [];
     column = [];
+    prev_row = [];
+    prev_column = [];
     line_ind = 0;
 
-    Nx = 1000
-    Ny = 1000
+    Nx = 2000
+    Ny = 2000
 
     width = 1920
     height = 1080
@@ -92,6 +94,8 @@ def network_structure_plot(arguments):
                 int_arr_column = [int(s) for s in raw_arr_column]
 
                 if read_mode == 'ADDITION':
+                    prev_row = copy.deepcopy(row)
+                    prev_column = copy.deepcopy(column)
                     print(int_arr_row)
                     print(int_arr_column)
                     if int_arr_row:
@@ -111,44 +115,42 @@ def network_structure_plot(arguments):
                     print(matched_set)
                     print(len(matched_set))
                     
+                    index_counter = 0
+
                     for item in matched_set:
                         print('pop: ' + str(item))
-                        row.pop(item)
-                        column.pop(item)
-                        
-                    if any(row):                        
-                        target_graph = np.zeros((Nx,Ny));
-                        assert(len(row) == len(column))
+                        # row.pop(item)
+                        # column.pop(item)
+                        row.pop(item - index_counter)
+                        column.pop(item - index_counter)
+                        index_counter += 1
 
-                        for target_row, target_column in zip(row, column):
-                            target_graph[target_row, target_column] = 1
+                    if((prev_row != row) or (prev_column != column)):
 
-                        adjacency = sparse.csr_matrix(target_graph)
-                        n_nodes, _ = adjacency.shape
-                        #names = np.arange(n_nodes)
-                        node_weights = np.array([i for i in adjacency.getnnz(0)])
+                        if any(row):                        
+                            target_graph = np.zeros((Nx,Ny));
+                            assert(len(row) == len(column))
+
+                            for target_row, target_column in zip(row, column):
+                                target_graph[target_row, target_column] = 1
+
+                            adjacency = sparse.csr_matrix(target_graph)
+                            n_nodes, _ = adjacency.shape
+                            #names = np.arange(n_nodes)
+                            node_weights = np.array([i for i in adjacency.getnnz(0)])
                         
-                        filename = new_dir_path + dir_separator + str(current_time)
+                            filename = new_dir_path + dir_separator + str(current_time)
                         
-                        svg_graph(adjacency,
-                                  position = position,
-                                  names = names,
-                                  directed = True,
-                                  width = width,
-                                  height = height,
-                                  edge_color='rgb(255, 212, 222)',
-                                  scale = 0.5,
-                                  display_node_weight=True,
-                                  node_weights=node_weights,
-                                  filename=filename)
+                            visualize_graph(adjacency,
+                                      position = position,
+                                      names = names,
+                                      directed = True,
+                                      width = width,
+                                      height = height,
+                                      edge_color='rgb(255, 212, 222)',
+                                      scale = 0.5,
+                                      display_node_weight=bool(setuptools.distutils.util.strtobool(silent)),
+                                      node_weights=node_weights,
+                                      filename=filename)
                 
                 line_ind+=2
-
-    '''
-    adjacency = np.array([[0, 0, 1, 1, 0], [1, 0, 0, 0, 1], [1, 0, 0, 1, 0], [1, 0, 1, 0, 1], [0, 1, 0, 1, 0]])
-    adjacency = sparse.csr_matrix(adjacency)
-    n_nodes, _ = adjacency.shape
-    names = np.arange(n_nodes)
-    svg_text = svg_graph(adjacency, names=names, directed=True)
-    '''
-
