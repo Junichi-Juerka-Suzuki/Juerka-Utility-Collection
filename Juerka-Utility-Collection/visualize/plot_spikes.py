@@ -3,7 +3,6 @@
 
 """This is the plot generator script.
 """
-#from distutils.util import strtobool
 import setuptools
 import matplotlib.pyplot as plot
 import numpy as np
@@ -25,6 +24,8 @@ def raster_plot(arguments):
 
     ResponseYmin = 0
     ResponseYmax = 1599
+
+    SpikeCountYmax = 1000
 
     fig, axs = plot.subplots(3, 1, figsize=[10,6])
     
@@ -68,8 +69,7 @@ def raster_plot(arguments):
                np.sum(spike_array, 0))
 
     axs[1].set_xlim([int_start_time, int_end_time])
-#    axs[1].set_ylim([0, Ny])
-    axs[1].set_ylim([0, 1000])
+    axs[1].set_ylim([0, SpikeCountYmax])
 
     axs[1].set_title('Spike Histogram')
     axs[1].set_xlabel('Time (ms)')
@@ -86,8 +86,7 @@ def raster_plot(arguments):
             np.sum(response_spike_array, 0))
 
     axs[2].set_xlim([int_start_time, int_end_time])
-#    axs[2].set_ylim([0, ResponseYmax+1-ResponseYmin])
-    axs[2].set_ylim([0, 1000])
+    axs[2].set_ylim([0, SpikeCountYmax])
 
     axs[2].set_title('Spike Histogram for excitatory neurons')
     axs[2].set_xlabel('Time (ms)')

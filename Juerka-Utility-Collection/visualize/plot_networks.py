@@ -4,7 +4,6 @@
 """This is the network plot generator script.
 """
 
-#from distutils.util import strtobool
 import copy
 import setuptools
 import math
@@ -119,8 +118,6 @@ def network_structure_plot(arguments):
 
                     for item in matched_set:
                         print('pop: ' + str(item))
-                        # row.pop(item)
-                        # column.pop(item)
                         row.pop(item - index_counter)
                         column.pop(item - index_counter)
                         index_counter += 1
@@ -136,7 +133,6 @@ def network_structure_plot(arguments):
 
                             adjacency = sparse.csr_matrix(target_graph)
                             n_nodes, _ = adjacency.shape
-                            #names = np.arange(n_nodes)
                             node_weights = np.array([i for i in adjacency.getnnz(0)])
                         
                             filename = new_dir_path + dir_separator + str(current_time)
