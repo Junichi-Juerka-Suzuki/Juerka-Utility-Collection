@@ -1,4 +1,9 @@
 # Juerka-Utility-Collection
+
+**NOTICE:Contents are for the older version of the script. let me fix.**
+
+
+
 ## Overview
 ### What is this?
 This is the collection of utility scripts for [Juerka](https://github.com/Junichi-Juerka-Suzuki/Juerka).
